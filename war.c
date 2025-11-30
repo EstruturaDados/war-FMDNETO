@@ -55,6 +55,9 @@ int main() {
     }
     
     //EXIBIÇÃO DOS TERRITÓRIOS CADASTRADOS
+    printf("=============================================\n");
+    printf("        MAPA DO MUNDO - ESTADO ATUAL\n");
+    printf("=============================================\n");
     printf("\nTerritórios Cadastrados:\n");
     printf("-------------------------------\n");
     for (int i = 0; i < numTerritorios; i++) { // exibe somente os cadastrados
