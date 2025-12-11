@@ -13,6 +13,7 @@
 typedef struct {
     char nome[MAX_NOME];
     char cor[MAX_COR];
+    char dono[MAX_NOME];
     int tropas;
 } Territorio;
 
@@ -130,7 +131,8 @@ int verificarMissaoBasica(char *missao, Territorio *mapa, int tamanho) {
 void exibirMapa(const Territorio *mapa, int quantidade) {
     printf("\n===== ESTADO ATUAL DO MAPA =====\n");
     for (int i = 0; i < quantidade; i++) {
-        printf("[%d] Nome: %s | Cor: %s | Tropas: %d\n", i + 1, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
+        printf("[%d] Nome: %s | Dono: %s | Cor: %s | Tropas: %d\n", i + 1,
+               mapa[i].nome, mapa[i].dono, mapa[i].cor, mapa[i].tropas);
     }
 }
 
@@ -152,7 +154,7 @@ void atacar(Territorio *atacante, Territorio *defensor) {
     printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
 
     if (dadoAtq > dadoDef) {
-        // atacante vence: transfere cor e metade das tropas para o defensor
+        // atacante vence: transfere cor, dono e metade das tropas para o defensor
         int tropasTransferidas = atacante->tropas / 2;
         if (tropasTransferidas == 0) {
             tropasTransferidas = 1;
@@ -160,6 +162,7 @@ void atacar(Territorio *atacante, Territorio *defensor) {
         defensor->tropas = tropasTransferidas;
         atacante->tropas -= tropasTransferidas;
         strcpy(defensor->cor, atacante->cor);
+        strcpy(defensor->dono, atacante->dono);
         printf("Atacante venceu! Território conquistado com %d tropas. Tropas restantes no atacante: %d\n",
                defensor->tropas, atacante->tropas);
     } else {
@@ -188,6 +191,7 @@ void cadastrarTerritorio(Territorio *t, int indice, const Jogador *jogadores, in
     } while (dono < 1 || dono > totalJogadores);
 
     strcpy(t->cor, jogadores[dono - 1].cor);
+    strcpy(t->dono, jogadores[dono - 1].nome);
     t->tropas = lerInteiro("Número de tropas (>=1): ", 1);
 }
 
